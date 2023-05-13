@@ -225,7 +225,6 @@ post_start_dag_id: 'example_dag_id'
 ```
 
 In this example, `dag_path` in the yaml file overrides the `-d` setting, `plugin_path` overrides the `-p` setting, and so forth.
-j
 
 ## Examples
 
