@@ -7,8 +7,8 @@
 </h3>
 <h1 align="center">Airlift</h1>
 <p align="center">
-  <a href="https://pypi.org/project/PACKAGE-NAME/">
-    <img alt="PyPI version" src="https://badge.fury.io/py/PACKAGE-NAME.svg">
+  <a href="https://pypi.org/project/airlift/">
+    <img alt="PyPI version" src="https://badge.fury.io/py/airlift.svg">
   </a>
 </p>
 
