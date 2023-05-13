@@ -1,10 +1,11 @@
+<h3 align="center">
 <img src="./docs/images/helicopter.png"
         alt="helicopter"
         width="120"
         height="90"
-        style="display: block; margin: 0 auto" />
-<h1 style="text-align: center; font-weight: bold">Airlift</h1>
-
+       />
+</h3>
+<h1 align="center">Airlift</h1>
 <p align="center">
   <a href="https://pypi.org/project/PACKAGE-NAME/">
     <img alt="PyPI version" src="https://badge.fury.io/py/PACKAGE-NAME.svg">
