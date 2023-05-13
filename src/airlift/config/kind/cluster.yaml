@@ -1,0 +1,29 @@
+# Used to create the local cluster.
+# Create with `kind create cluster --config ./kind-cluster.yaml`
+# Not directly created with Terraform.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
+    extraPortMappings:
+      - containerPort: 30080 
+        hostPort:  {{ port }} 
+        listenAddress: "0.0.0.0" # Optional, defaults to "0.0.0.0"
+        protocol: tcp # Optional, defaults to tcp
+    extraMounts:
+      - hostPath: {{ dag_path }}
+        containerPath: /mnt/airflow/dags
+      {% if plugin_path != None  %}
+      - hostPath: {{ plugin_path }}
+        containerPath: /mnt/airflow/plugins
+      {% endif %}
+      {% for volume in extra_volume_mounts %}
+      - hostPath: {{ volume["hostPath"] }}
+        containerPath: {{ volume["containerPath"] }}
+      {% endfor %}

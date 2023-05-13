@@ -1,0 +1,69 @@
+airflowLocalSettings: ""
+config:
+  api:
+    auth_backend: 'airflow.api.auth.backend.basic_auth'
+images:
+  airflow:
+    repository: airlift 
+    tag: latest 
+    pullPolicy: Never
+executor: LocalExecutor
+postgresql:
+  enabled: true
+  persistence:
+    enabled: false
+flower:
+  enabled: false
+redis:
+  enabled: false
+statsd:
+  enabled: false
+pgbouncer:
+  enabled: false
+workers:
+  resources:
+    limits:
+      memory: 128Mi
+scheduler:
+  livenessProbe:
+    initialDelaySeconds: 60
+    timeoutSeconds: 120
+    failureThreshold: 10
+    periodSeconds: 120
+  extraVolumes:
+    - name: dags
+      hostPath:
+        path: /mnt/airflow/dags
+        type: Directory
+    {% if plugin_path != None  %}
+    - name: plugins
+      hostPath:
+        path: /mnt/airflow/plugins
+        type: Directory
+    {% endif %}
+    {% for volume in extra_volume_mounts %}
+    - name: {{ volume['name'] }}
+      hostPath: 
+        path: {{ volume["containerPath"] }}
+        type: Directory
+    {% endfor %}
+  extraVolumeMounts:
+    - name: dags
+      mountPath: /opt/airflow/dags
+    - name: dags
+      mountPath: /usr/local/airflow/dags/
+    {% if plugin_path != None  %}
+    - name: plugins
+      mountPath: /opt/airflow/plugins
+    {% endif %} 
+    {% for volume in extra_volume_mounts %}
+    - name: {{ volume['name'] }} 
+      mountPath: {{ volume['containerPath'] }} 
+    {% endfor %}
+webserver:
+  service:
+    type: NodePort
+    ports:
+      - name: airflow-ui
+        nodePort: 30080
+        port: 8080
