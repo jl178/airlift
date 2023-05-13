@@ -55,8 +55,10 @@ brew install helm
 #### Docker
 
 ```bash
-brew install docker
+brew install --cask docker
 ```
+
+-OR- use a tool like [Docker Desktop](https://www.docker.com/products/docker-desktop/) or [Rancher Desktop](https://rancherdesktop.io/)
 
 #### Kind
 
