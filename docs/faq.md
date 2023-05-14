@@ -55,6 +55,9 @@ You can do this by using the `--image` flag when starting the service. EX:
 airlift start -d /my/dag/path --image apache/airflow:2.4.0
 ```
 
+If you are using Airflow 2.2.2, I have built a custom image which supports *some* packages. Your mileage will vary depending on what PyPi packages you use.
+To use this custom image, pass `--image jeredlittle/airflow:2.2.2-arm`
+
 See [this link](https://hub.docker.com/r/apache/airflow/tags) for supported ARM images for Airflow. Note: ARM support for Airflow Docker images started in `2.3.0`
 
 [Back to top](#frequently-asked-questions)
