@@ -5,7 +5,6 @@ REQUIRED_SOFTWARE_PATH = os.path.join(BASE_DIR, "airlift/required_software.yaml"
 DEFAULT_AIRLIFT_CONFIG_FILE = os.path.join(BASE_DIR, "airlift/config.yaml")
 DEFAULT_HELM_CONFIG_FILE = os.path.join(BASE_DIR, "helm/values.yaml")
 DEFAULT_CLUSTER_CONFIG_FILE = os.path.join(BASE_DIR, "kind/cluster.yaml")
-DEFAULT_MERGE_STRATEGY = "MERGE"
 FINAL_HELM_VALUES_FILE_PATH = os.path.join(BASE_DIR, "helm/final_values.yaml")
 FINAL_CONFIG_VALUES_FILE_PATH = os.path.join(BASE_DIR, "airlift/final_config.yaml")
 FINAL_CLUSTER_CONFIG_FILE_PATH = os.path.join(BASE_DIR, "kind/final_cluster.yaml")

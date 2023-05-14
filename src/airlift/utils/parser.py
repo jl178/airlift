@@ -1,7 +1,6 @@
 import argparse
 from airlift.config.config import (
     CHART_VERSION,
-    DEFAULT_MERGE_STRATEGY,
     DEFAULT_DOCKERFILE_PATH,
     DEFAULT_DOCKER_IMAGE,
     DEFAULT_WEBSERVER_PORT,
@@ -92,12 +91,6 @@ class ParserUtils:
             "-C",
             "--cluster_config_file",
             help="Optional cnfiguration file for the `kind` cluster.",
-        )
-        start.add_argument(
-            "-s",
-            "--config_merge_strategy",
-            default=DEFAULT_MERGE_STRATEGY,
-            help="When config files are passed in via the CLI, what is the strategy for using the files. Defaults to merging with the default config.",
         )
         start.add_argument(
             "-ip",

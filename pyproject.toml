@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "airlift"
-version = "0.1.0"
+version = "0.1.1"
 description = "A CLI for creating a flexible Apache Airflow local development environment"
 authors = ["jered.little <jeredlittle1996@gmail.com>"]
 readme = "README.md"
