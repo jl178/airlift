@@ -34,6 +34,8 @@ Airlift requires the following software to be installed on your system:
 
 Below are the installation instructions for each of these tools on MacOS and Linux distributions.
 
+It is also recommended to allocate at least 4GB of RAM for Docker to run this service.
+
 ### Install Homebrew
 
 Homebrew is a package manager that we will use to install the necessary software. If you don't have Homebrew installed, you can install it by following these instructions:
@@ -230,6 +232,12 @@ post_start_dag_id: 'example_dag_id'
 ```
 
 In this example, `dag_path` in the yaml file overrides the `-d` setting, `plugin_path` overrides the `-p` setting, and so forth.
+
+Using this configuration, you can now start the service using:
+
+```bash
+airlift start -c $HOME/.config/airlift/config.yaml
+```
 
 ## Examples
 
