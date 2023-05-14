@@ -94,6 +94,9 @@ airlift start -d /path/to/dags -p /path/to/plugins -r /path/to/requirements.txt
 
 **Note: The DAG and Plugins folders are mounted directly to the airflow service for hot-reloading. When you make a change locally, it should automatically appear in the Airflow UI.**
 
+**Note: Start times for Airflow can be upwards of 5 minutes, due to the bootstrapping, installation of required PyPi packages, and the creation of the Postgres database.
+This all depends on your local machines power & the complexity of your Airflow setup.**
+
 #### 2. check
 
 Checks if all pre-requisite software is installed.

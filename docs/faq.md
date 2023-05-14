@@ -7,6 +7,8 @@
 - [Question 3](#q3)
 - [Question 4](#q4)
 - [Question 5](#q5)
+- [Question 6](#q6)
+- [Question 7](#q7)
 
 ---
 
@@ -64,9 +66,41 @@ See [this link](https://hub.docker.com/r/apache/airflow/tags) for supported ARM 
 
 ---
 
-## Q5: Why did you build this CLI tool?
+---
+
+## Q5: The start time seems slow. Why? Is something wrong?
 
 <a id='q5'></a>
+Answer: The start time for Airflow can be upwards of 5 minutes, depending on the complexity of your `requirements.txt` file and the processing power of your local machine.
+It is recommended to allocate at least 4 GB of RAM and 2 VCPUs for Airflow. Even with a minimal setup, it can take some time for Airflow to start, due to the bootstrapping required to get all
+the required services up & running (For example, the Postgres instance)
+
+[Back to top](#frequently-asked-questions)
+
+---
+
+## Q6: My service never starts correctly. How can I debug?
+
+<a id='q6'></a>
+Answer: You can use the `kubectl` [CLI](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/) to get the status of all pods for airlift:
+
+```bash
+kubectl get all -n airlift
+```
+
+This will show all pods & their current status. If you see a pod is failing, get the events by running:
+
+```bash
+kubectl describe pod <POD_NAME> -n airlift
+```
+
+In a future release, this will be abstracted away using the `airlift` CLI. If you are unable to figure out the root cause of your issue, open an Issue on the Github repo.
+
+[Back to top](#frequently-asked-questions)
+
+## Q7: Why did you build this CLI tool?
+
+<a id='q7'></a>
 Answer: I couldn't find a simple, yet flexible CLI tool for Airflow which met my local development needs. I wanted to be able to easily switch between Airflow releases & customize all configuration values
 using a config file
 
