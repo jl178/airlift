@@ -121,6 +121,18 @@ class ParserUtils:
             "--post_start_dag_id",
             help="The DAG ID to run post service start. Helpful when you need to bootstrap the service with a DAG execution.",
         )
+        start.add_argument(
+            "-Dr",
+            "--dag_trigger_retries",
+            help="How many times to retry the DAG trigger operation. Time can vary between DAGs becoming available for execution in the UI. Defaults to 3.",
+            default=3,
+        )
+        start.add_argument(
+            "-Dw",
+            "--dag_trigger_retry_wait",
+            help="How long to wait before re-triggering the DAG in Airflow. Defaults to 10 seconds.",
+            default=10,
+        )
 
     def __add_check_parser(self) -> None:
         self.subparser.add_parser(
@@ -182,6 +194,18 @@ class ParserUtils:
             "-D",
             "--post_start_dag_id",
             help="The DAG ID to run.",
+        )
+        run_dag.add_argument(
+            "-Dr",
+            "--dag_trigger_retries",
+            help="How many times to retry the DAG trigger operation. Time can vary between DAGs becoming available for execution in the UI. Defaults to 3.",
+            default=3,
+        )
+        run_dag.add_argument(
+            "-Dw",
+            "--dag_trigger_retry_wait",
+            help="How long to wait before re-triggering the DAG in Airflow. Defaults to 10 seconds.",
+            default=10,
         )
 
     def get_parsed_args(self):

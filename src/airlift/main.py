@@ -5,6 +5,10 @@ It uses Helm and Kind underneath the hood to spin up the service. run `airlift -
 
 import sys
 import os
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
 from airlift.commands.run_dag import run_dag
 from airlift.config.config import (
     DEFAULT_AIRLIFT_CONFIG_FILE,
@@ -14,9 +18,6 @@ from airlift.config.config import (
     FINAL_CLUSTER_CONFIG_FILE_PATH,
 )
 
-current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
 
 import argparse
 from airlift.commands.remove import remove
