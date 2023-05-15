@@ -133,6 +133,12 @@ class ParserUtils:
             help="How long to wait before re-triggering the DAG in Airflow. Defaults to 10 seconds.",
             default=10,
         )
+        start.add_argument(
+            "-sr",
+            "--status_retries",
+            help="How many times to retry the service connection before failing. Defaults to 2.",
+            default=2,
+        )
 
     def __add_check_parser(self) -> None:
         self.subparser.add_parser(
@@ -161,6 +167,12 @@ class ParserUtils:
             "--port",
             default=DEFAULT_WEBSERVER_PORT,
             help=f"The port to check the webserver on. Defaults to {DEFAULT_WEBSERVER_PORT}",
+        )
+        status.add_argument(
+            "-sr",
+            "--status_retries",
+            help="How many times to retry the service connection before failing. Defaults to 2.",
+            default=2,
         )
 
     def __add_import_variables_parser(self) -> None:

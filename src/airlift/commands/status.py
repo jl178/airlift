@@ -15,14 +15,22 @@ def check_service_status(args, wait):
         text=f"Checking Webserver Status on Port {args.port}", spinner="dots"
     ) as spinner:
         spinner.start()
-        time.sleep(wait)
-        try:
-            AirflowUtils.check_webserver_status(port=args.port)
-        except RuntimeError as e:
+        retries = 0
+        error = None
+        while retries <= int(args.status_retries):
+            time.sleep(wait)
+            try:
+                AirflowUtils.check_webserver_status(port=args.port)
+                spinner.succeed()
+                return
+            except Exception as e:
+                error = e
+                logging.warning(str(e))
+                retries += 1
+        if retries >= int(args.status_retries):
             spinner.fail()
-            logging.error(str(e))
+            logging.error(str(error))
             exit(1)
-        spinner.succeed()
 
 
 def status(args, wait=10):
