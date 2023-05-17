@@ -233,7 +233,7 @@ post_start_dag_id: 'example_dag_id'
 
 In this example, `dag_path` in the yaml file overrides the `-d` setting, `plugin_path` overrides the `-p` setting, and so forth.
 
-** WARNING: If you are updating the image to a different version, make sure to add `airflowVersion: X.X.X` where `X.X.X` is the Airflow version in your image. Failure to do so can lead to components failing! [See here for more details](./docs/faq.md)**
+**WARNING: If you are updating the image to a different version, make sure to add `airflowVersion: X.X.X` where `X.X.X` is the Airflow version in your image. Failure to do so can lead to components failing! [See here for more details](./docs/faq.md)**
 
 Using this configuration, you can now start the service using:
 
