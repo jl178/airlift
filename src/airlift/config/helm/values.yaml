@@ -24,9 +24,26 @@ workers:
   resources:
     limits:
       memory: 128Mi
+triggerer:
+  livenessProbe:
+    command:
+      - sh
+      - -c
+      - |
+        CONNECTION_CHECK_MAX_COUNT=0 AIRFLOW__LOGGING__LOGGING_LEVEL=ERROR exec /entrypoint \
+        airflow version
 scheduler:
   livenessProbe:
-    enabled: false
+    command:
+      - sh
+      - -c
+      - |
+        CONNECTION_CHECK_MAX_COUNT=0 AIRFLOW__LOGGING__LOGGING_LEVEL=ERROR exec /entrypoint \
+        airflow version
+    initialDelaySeconds: 60
+    timeoutSeconds: 120
+    failureThreshold: 10
+    periodSeconds: 120
   extraVolumes:
     - name: dags
       hostPath:
