@@ -209,6 +209,8 @@ scheduler:
 
 You can find all the possible configuration overrides here: <https://artifacthub.io/packages/helm/apache-airflow/airflow?modal=values>
 
+Note: By default, we disable the `livenessProbe` checks for the scheduler & triggerer due to conflicts with Kind. See `./src/airlift/config/helm/values.yaml` for the exact config values
+
 #### Airlift Configuration
 
 The Airlift configuration file overrides all flag values to simplify starting the service.
