@@ -102,14 +102,14 @@ In a future release, this will be abstracted away using the `airlift` CLI. If yo
 ## Q7: My tasks keep failing with SIGTERM. When I check the scheduler, I see it keeps restarting. Why?
 
 <a id='q7'></a>
-Answer: The Helm Chart for airflow has a config value: `airflowVersion: X.X.X`. Make sure this version corresponds to the image version you are using. For example, if using Airflow `2.2.2`:
+Answer: Check the pod running the scheduler using:
 
-`$HOME/.config/airlift/helm_values.yaml`
-```yaml
-airflowVersion: 2.2.2
+```bash
+kubectl get all -n airlift
+kubectl describe pod <SCHEDULER_POD_NAME> -n airlift
 ```
 
-If you don't do this, the livenessProbe for the scheduler/triggerer could fail, as the commands [change depending on your Airflow version](https://github.com/apache/airflow/blob/main/chart/templates/_helpers.yaml).
+Check for any errors in the events. If none are present, check the container logs inside the pod to further debug. Using a tool like `k9s` makes this easy.
 
 [Back to top](#frequently-asked-questions)
 
@@ -120,4 +120,3 @@ Answer: I couldn't find a simple, yet flexible CLI tool for Airflow which met my
 using a config file
 
 [Back to top](#frequently-asked-questions)
-
