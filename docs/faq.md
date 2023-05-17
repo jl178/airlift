@@ -98,10 +98,25 @@ In a future release, this will be abstracted away using the `airlift` CLI. If yo
 
 [Back to top](#frequently-asked-questions)
 
-## Q7: Why did you build this CLI tool?
+## Q7: My tasks keep failing with SIGTERM. When I check the scheduler, I see it keeps restarting. Why?
 
 <a id='q7'></a>
+Answer: The Helm Chart for airflow has a config value: `airflowVersion: X.X.X`. Make sure this version corresponds to the image version you are using. For example, if using Airflow `2.2.2`:
+
+`$HOME/.config/airlift/helm_values.yaml`
+```yaml
+airflowVersion: 2.2.2
+```
+
+If you don't do this, the livenessProbe for the scheduler/triggerer could fail, as the commands [change depending on your Airflow version](https://github.com/apache/airflow/blob/main/chart/templates/_helpers.yaml).
+
+[Back to top](#frequently-asked-questions)
+
+## Q8: Why did you build this CLI tool?
+
+<a id='q8'></a>
 Answer: I couldn't find a simple, yet flexible CLI tool for Airflow which met my local development needs. I wanted to be able to easily switch between Airflow releases & customize all configuration values
 using a config file
 
 [Back to top](#frequently-asked-questions)
+
