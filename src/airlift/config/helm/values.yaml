@@ -26,10 +26,7 @@ workers:
       memory: 128Mi
 scheduler:
   livenessProbe:
-    initialDelaySeconds: 60
-    timeoutSeconds: 120
-    failureThreshold: 10
-    periodSeconds: 120
+    enabled: false
   extraVolumes:
     - name: dags
       hostPath:
