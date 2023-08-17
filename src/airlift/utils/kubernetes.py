@@ -20,3 +20,30 @@ class KubernetesUtils:
             raise RuntimeError(
                 f"Failed to create cluster:\n{stdoutdata}\n\n{stderrdata}"
             )
+
+    @staticmethod
+    def get_logs(
+        selector: str,
+        selector_value: str,
+        namespace: str,
+        follow: bool = False,
+        tail_lines: int = -1,
+    ):
+        import logging
+
+        command = f"kubectl logs --prefix -l {selector}={selector_value} -n {namespace} {'--follow' if follow else ''} {'--tail='+ str(tail_lines) if not follow else ''}".rstrip(
+            " "
+        )
+        logging.error(command)
+        status, stdoutdata, stderrdata = CommandUtils.run_command(command, follow)
+        if status != 0:
+            raise RuntimeError(f"Failed to get logs:\n{stdoutdata}\n\n{stderrdata}")
+        return stdoutdata
+
+    @staticmethod
+    def get_events(selector: str, selector_value, namespace: str) -> str:
+        command = f"kubectl describe pod --selector {selector}={selector_value} -n {namespace} | grep -A20 Events"
+        status, stdoutdata, stderrdata = CommandUtils.run_command(command)
+        if status != 0:
+            raise RuntimeError(f"Failed to get events:\n{stdoutdata}\n\n{stderrdata}")
+        return stdoutdata

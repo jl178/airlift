@@ -21,6 +21,7 @@ class ParserUtils:
         self.__add_unpause_parser()
         self.__add_import_variables_parser()
         self.__add_run_dag_parser()
+        self.__add_log_parser()
 
     def convert_list_of_dicts(self, values):
         list_vals = []
@@ -218,6 +219,42 @@ class ParserUtils:
             "--dag_trigger_retry_wait",
             help="How long to wait before re-triggering the DAG in Airflow. Defaults to 10 seconds.",
             default=10,
+        )
+
+    def __add_log_parser(self) -> None:
+        logs = self.subparser.add_parser(
+            "logs", description="Gets the logs for a given Airflow component"
+        )
+        logs.add_argument(
+            "-e",
+            "--events",
+            default=False,
+            help=f"Optional flag to retrieve the events from the pods, instead of the logs",
+        )
+        logs.add_argument(
+            "-t",
+            "--tail",
+            default=100,
+            help=f"Optional parameter to tail the n number of lines.",
+        )
+        logs.add_argument(
+            "-f",
+            "--follow",
+            default=False,
+            action=argparse.BooleanOptionalAction,
+            help=f"Optional parameter to stream the logs in real time to stdout",
+        )
+        logs.add_argument(
+            "-c",
+            "--component",
+            default="scheduler",
+            help="Flag to identify which component to retrive logs from. One of scheduler, webserver, triggerer",
+        )
+        logs.add_argument(
+            "-s",
+            "--selector",
+            default="component",
+            help="The selector value to filter logs on. Defaults to `component`",
         )
 
     def get_parsed_args(self):

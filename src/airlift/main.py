@@ -23,6 +23,7 @@ import argparse
 from airlift.commands.remove import remove
 from airlift.commands.status import status
 from airlift.commands.pause import pause, unpause
+from airlift.commands.logs import logs
 from airlift.utils.parser import ParserUtils
 import logging
 from airlift.commands.import_variables import import_variables
@@ -111,6 +112,8 @@ def main(args=None):
         import_variables(args)
     elif args.subcommand == "run_dag":
         run_dag(args)
+    elif args.subcommand == "logs":
+        logs(args)
     else:
         logging.error(
             f"Invalid command {args.subcommand}. Run `airlift -h` for a list of valid commands"
