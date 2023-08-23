@@ -109,7 +109,10 @@ kubectl get all -n airlift
 kubectl describe pod <SCHEDULER_POD_NAME> -n airlift
 ```
 
-Check for any errors in the events. If none are present, check the container logs inside the pod to further debug. Using a tool like `k9s` makes this easy.
+Check for any errors in the events. If none are present, check the container logs inside the pod to further debug. You can use the `airlift logs` command to do this.
+
+
+Alternatively, use a tool like `k9s`.
 
 [Back to top](#frequently-asked-questions)
 
