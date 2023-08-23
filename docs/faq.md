@@ -10,7 +10,7 @@
 - [Question 6](#q6)
 - [Question 7](#q7)
 - [Question 8](#q8)
-
+- [Question 9](#q9)
 ---
 
 ## Q1: How can I change an Airflow config value?
@@ -118,5 +118,18 @@ Check for any errors in the events. If none are present, check the container log
 <a id='q8'></a>
 Answer: I couldn't find a simple, yet flexible CLI tool for Airflow which met my local development needs. I wanted to be able to easily switch between Airflow releases & customize all configuration values
 using a config file
+
+[Back to top](#frequently-asked-questions)
+
+## Q9: How can I view the logs for the scheduler/webserver?
+
+<a id='q9'></a>
+Answer: Use the `airlift logs` command:
+
+```bash
+airlift logs --component webserver --follow
+```
+
+See `airlift logs -h` for all options
 
 [Back to top](#frequently-asked-questions)
