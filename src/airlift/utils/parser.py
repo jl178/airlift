@@ -229,6 +229,7 @@ class ParserUtils:
             "-e",
             "--events",
             default=False,
+            action=argparse.BooleanOptionalAction,
             help=f"Optional flag to retrieve the events from the pods, instead of the logs",
         )
         logs.add_argument(
@@ -242,7 +243,7 @@ class ParserUtils:
             "--follow",
             default=False,
             action=argparse.BooleanOptionalAction,
-            help=f"Optional parameter to stream the logs in real time to stdout",
+            help=f"Optional parameter to stream the logs in real time to stdout. Does not work for events.",
         )
         logs.add_argument(
             "-c",

@@ -1,5 +1,6 @@
 import subprocess
 import logging
+import sys
 
 
 class CommandUtils:
@@ -14,7 +15,8 @@ class CommandUtils:
 
         """
         if stream_output:
-            return (CommandUtils._stream_command(command), "", "")
+            CommandUtils._stream_command(command)
+            return (0, "Logs streamed successfully", "")
         else:
             process = subprocess.Popen(
                 command.split(" "),
@@ -29,32 +31,17 @@ class CommandUtils:
             )
 
     @staticmethod
-    def _stream_command(command: str):
+    def _stream_command(command: str) -> None:
+        """
+        Streams a commands output to stdout until a keyboard interrupt is received.
+        Args:
+            command: The command to run in the terminal
+        """
+        process = subprocess.Popen(
+            command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+        )
         try:
-            process = subprocess.Popen(
-                command,
-                shell=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                universal_newlines=True,
-            )
-            # Print stdout and stderr as they come in
-            while True:
-                output = process.stdout.readline()
-                if output:
-                    print(output.strip())
-                error = process.stderr.readline()
-                if error:
-                    logging.error(error.strip())
-                # Break the loop once process is done
-                return_code = process.poll()
-                if return_code is not None:
-                    for output in process.stdout.readlines():
-                        print(output.strip())
-                    for error in process.stderr.readlines():
-                        logging.error(error.strip())
-                    break
-            return return_code
-        except subprocess.CalledProcessError as e:
-            logging.error(f"Command failed with error: {e}")
-            return e.returncode
+            for line in process.stdout:  # pyright: ignore
+                sys.stdout.write(line.decode("utf-8"))
+        except KeyboardInterrupt:
+            logging.info("Keyboard interrupt received.")
