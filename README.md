@@ -68,6 +68,8 @@ brew install --cask docker
 brew install kind
 ```
 
+**Note: This software was tested and validated working with kind v0.17. [There are known issues with kind v0.20 and Rancher](https://github.com/kubernetes-sigs/kind/issues/3277). If you are experiencing issues, please downgrade
+your kind installation [by installing from the source/release binaries](https://kind.sigs.k8s.io/docs/user/quick-start/#installing-from-release-binaries).** 
 ## Installation
 
 Airlift can be installed using pip:
