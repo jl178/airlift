@@ -225,7 +225,6 @@ dag_path: /path/to/dags
 plugin_path: /path/to/plugins
 requirements_file: /path/to/requirements.txt
 helm_values_file: /path/to/values.yaml
-airlift_config_file: /path/to/airlift/config.yaml
 extra_volume_mounts:
   - hostPath=/my/cool/path,containerPath=/my/mounted/path,name=a_unique_name
 cluster_config_file: /path/to/cluster/config.yaml
