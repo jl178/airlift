@@ -1,7 +1,6 @@
 ## Introduction
 
-This guide will show you how to start airlift using Airflow version `2.5.1` on an ARM machine. Airflow version `2.5.1` has some packaging issues in the base Docker image,
-which requires some patching for ARM machines.
+This guide will show you how to start airlift using Airflow version `2.5.1` on an ARM machine. Depending on what `requirements.txt` you have, Airflow version `2.5.1` can have some packaging issues (due to `gcc` not being available for use) in the base Docker image. This can require some patching for ARM machines.
 
 ### Start
 
