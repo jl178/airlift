@@ -17,7 +17,7 @@
 Airlift is a Command Line Interface (CLI) tool designed to provide a local development environment for Apache Airflow with a simple but flexible interface.
 It is built on top of the official [Airflow Helm Chart](https://artifacthub.io/packages/helm/apache-airflow/airflow).
 <h3 align="center">
-<img src="https://github.com/jl178/airlift/blob/main/docs/images/start.gif"
+<img src="./docs/images/start.gif"
         alt="demo"
         width=600,
         height=300,
