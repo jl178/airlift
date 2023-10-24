@@ -118,3 +118,7 @@ class FileUtils:
             target_path: The target file path
         """
         shutil.copy(source_path, target_path)
+
+    @staticmethod
+    def create_tmp_folders(path: str):
+        os.makedirs(path, exist_ok=True)

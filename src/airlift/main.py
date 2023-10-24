@@ -1,6 +1,6 @@
 """
 This is the `airlift` CLI which can be used to spin up a local Airflow environment for development & testing.
-It uses Helm and Kind underneath the hood to spin up the service. run `airlift -h` to get started 
+It uses Helm and Kind underneath the hood to spin up the service. run `airlift -h` to get started
 """
 
 import sys
