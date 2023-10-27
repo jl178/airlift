@@ -142,7 +142,7 @@ def create_cluster():
                 KindUtils.create_cluster(NAME, FINAL_CLUSTER_CONFIG_FILE_PATH)
             else:
                 spinner.info("Cluster Already Exists")
-                logging.warning(f"Cluster already exists: {NAME}. Not creating.")
+                logging.debug(f"Cluster already exists: {NAME}. Not creating.")
                 return
         except RuntimeError as e:
             spinner.fail()

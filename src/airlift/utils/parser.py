@@ -34,7 +34,7 @@ class ParserUtils:
         return list_vals
 
     def __add_parser_args(self) -> None:
-        self.parser.add_argument("-l", "--log_level", default="ERROR")
+        self.parser.add_argument("-l", "--log_level", default="WARNING")
 
     def __add_start_parser(self) -> None:
         start = self.subparser.add_parser(

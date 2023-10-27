@@ -30,7 +30,7 @@ def run_dag(args):
                 return
             except Exception as e:
                 error = e
-                logging.warning(str(e))
+                logging.debug(str(e))
                 retries += 1
                 time.sleep(int(args.dag_trigger_retry_wait))
         if retries >= int(args.dag_trigger_retries):
