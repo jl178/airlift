@@ -3,8 +3,6 @@ from dotmap import DotMap
 from airlift.commands.import_variables import import_variables
 from airlift.commands.run_dag import run_dag
 from airlift.config.config import (
-    DEFAULT_USER,
-    FINAL_CONFIG_VALUES_FILE_PATH,
     NAME,
     DEFAULT_DOCKERFILE_PATH,
     FINAL_DOCKERFILE_PATH,
@@ -15,7 +13,6 @@ from airlift.config.config import (
     FINAL_CLUSTER_CONFIG_FILE_PATH,
     FINAL_HELM_VALUES_FILE_PATH,
 )
-from airlift.utils.airflow import AirflowUtils
 from airlift.utils.docker import DockerUtils
 from airlift.utils.file import FileUtils
 from halo import Halo
@@ -23,25 +20,9 @@ from airlift.utils.helm import HelmUtils
 import yaml
 from airlift.utils.kind import KindUtils
 from airlift.commands.status import status
-import json
 import os
 
 
-def create_tmp_folders():
-    """
-    Creates all folders needed for airlift to run.
-    """
-    paths = [
-        s.rpartition("/")[0]
-        for s in [
-            FINAL_DOCKERFILE_PATH,
-            FINAL_CONFIG_VALUES_FILE_PATH,
-            FINAL_HELM_VALUES_FILE_PATH,
-            FINAL_CLUSTER_CONFIG_FILE_PATH,
-        ]
-    ]
-    for path in paths:
-        FileUtils.create_tmp_folders(path)
 
 
 def check_plugin_path(path: str):
@@ -227,7 +208,6 @@ def start(args: DotMap):
     """
     if args.plugin_path:
         check_plugin_path(args.plugin_path)
-    create_tmp_folders()
     generate_configs(args)
     build_image(args)
     create_cluster()

@@ -34,6 +34,24 @@ from dotmap import DotMap
 from airlift.utils.airlift import AirliftUtils
 
 
+
+def create_tmp_folders():
+    """
+    Creates all folders needed for airlift to run.
+    """
+    paths = [
+        s.rpartition("/")[0]
+        for s in [
+            FINAL_DOCKERFILE_PATH,
+            FINAL_CONFIG_VALUES_FILE_PATH,
+            FINAL_HELM_VALUES_FILE_PATH,
+            FINAL_CLUSTER_CONFIG_FILE_PATH,
+        ]
+    ]
+    for path in paths:
+        FileUtils.create_tmp_folders(path)
+
+
 def set_logger(level: str):
     """
     Sets the logging level
@@ -86,6 +104,7 @@ def main(args=None):
     Entrypoint
     """
     cleanup()
+    create_tmp_folders()
     parser = argparse.ArgumentParser(
         prog="airlift",
         description=__doc__,
