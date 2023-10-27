@@ -1,10 +1,8 @@
 import logging
-
 from dotmap import DotMap
 from airlift.commands.import_variables import import_variables
 from airlift.commands.run_dag import run_dag
 from airlift.config.config import (
-    DEFAULT_USER,
     NAME,
     DEFAULT_DOCKERFILE_PATH,
     FINAL_DOCKERFILE_PATH,
@@ -15,7 +13,6 @@ from airlift.config.config import (
     FINAL_CLUSTER_CONFIG_FILE_PATH,
     FINAL_HELM_VALUES_FILE_PATH,
 )
-from airlift.utils.airflow import AirflowUtils
 from airlift.utils.docker import DockerUtils
 from airlift.utils.file import FileUtils
 from halo import Halo
@@ -23,7 +20,32 @@ from airlift.utils.helm import HelmUtils
 import yaml
 from airlift.utils.kind import KindUtils
 from airlift.commands.status import status
-import json
+import os
+
+
+
+
+def check_plugin_path(path: str):
+    """
+    Checks the Airflow plugins path for a venv folder, since it could cause scheduler issues.
+    Args:
+        path: the path to the plugins
+    """
+    if not os.path.exists(path):
+        logging.warning(f"The path '{path}' does not exist.")
+        return
+
+    all_entries = os.listdir(path)
+    # Filter the list to include only directories
+    folders = [
+        entry for entry in all_entries if os.path.isdir(os.path.join(path, entry))
+    ]
+    found = ["venv" in folder for folder in folders]
+
+    if True in found:
+        logging.warning(
+            f"plugin_path contains a potential `venv` folder. This can have impact on the Airflow scheduler and may cause it not to function: {path}. It is recommended to move your virtual environment to a different folder."
+        )
 
 
 def generate_configs(args: DotMap):
@@ -101,7 +123,7 @@ def create_cluster():
                 KindUtils.create_cluster(NAME, FINAL_CLUSTER_CONFIG_FILE_PATH)
             else:
                 spinner.info("Cluster Already Exists")
-                logging.warning(f"Cluster already exists: {NAME}. Not creating.")
+                logging.debug(f"Cluster already exists: {NAME}. Not creating.")
                 return
         except RuntimeError as e:
             spinner.fail()
@@ -184,6 +206,8 @@ def start(args: DotMap):
     Args:
         args: The command line args
     """
+    if args.plugin_path:
+        check_plugin_path(args.plugin_path)
     generate_configs(args)
     build_image(args)
     create_cluster()

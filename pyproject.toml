@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "airlift"
-version = "0.2.0"
+version = "0.3.0"
 description = "A CLI for creating a flexible Apache Airflow local development environment"
 authors = ["jered.little <jeredlittle1996@gmail.com>"]
 readme = "README.md"
@@ -21,6 +21,8 @@ requests = "^2.30.0"
 pytest = "^7.3.1"
 coverage = "^7.2.5"
 mock = "^5.0.2"
+black = "^23.10.1"
+ruff = "^0.1.1"
 
 [build-system]
 requires = ["poetry-core"]

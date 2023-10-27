@@ -25,7 +25,7 @@ def check_service_status(args, wait):
                 return
             except Exception as e:
                 error = e
-                logging.warning(str(e))
+                logging.debug(str(e))
                 retries += 1
         if retries >= int(args.status_retries):
             spinner.fail()
