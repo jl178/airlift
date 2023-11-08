@@ -34,9 +34,40 @@ Airlift requires the following software to be installed on your system:
 
 Below are the installation instructions for each of these tools on MacOS and Linux distributions.
 
-It is also recommended to allocate at least 4GB of RAM for Docker to run this service.
+Note: It is also recommended to allocate at least 4GB of RAM for Docker to run this service.
 
-### Install Homebrew
+### Option 1: Nix Installation
+
+`airlift` is packaged and available via the [nix package manager](https://nixos.org/).
+
+#### Install `nix`
+
+Install Nix via the recommended multi-user installation:
+
+```
+sh <(curl -L https://nixos.org/nix/install) --daemon
+```
+
+#### Install `airlift`
+
+```
+nix-shell -I nixpkgs=channel:nixpkgs-unstable -p airlift
+```
+
+This will install `airlift` in a disposable shell. Once you `exit` the shell, it will no longer be available for use.
+
+**Note: `airlift` is only available on the unstable nix channel. It will be available on the stable branch of nixpkgs in the future.**
+
+You can also run a single `airlift` command using this shell:
+
+```
+nix-shell -I nixpkgs=channel:nixpkgs-unstable -p airlift --command "airlift -h"
+```
+
+To install `airlift` permanently in your environment, you can use `nix-env` [instead](https://nixos.org/manual/nix/stable/command-ref/nix-env).
+
+
+### Option 2: Homebrew Installation
 
 Homebrew is a package manager that we will use to install the necessary software. If you don't have Homebrew installed, you can install it by following these instructions:
 
@@ -44,17 +75,17 @@ Homebrew is a package manager that we will use to install the necessary software
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### Install Software
+#### Install Software
 
 With Homebrew installed, you can now install Helm, Docker, and Kind.
 
-#### Helm
+##### Helm
 
 ```bash
 brew install helm
 ```
 
-#### Docker
+##### Docker
 
 ```bash
 brew install --cask docker
@@ -62,7 +93,7 @@ brew install --cask docker
 
 -OR- use a tool like [Docker Desktop](https://www.docker.com/products/docker-desktop/) or [Rancher Desktop](https://rancherdesktop.io/)
 
-#### Kind
+##### Kind
 
 ```bash
 brew install kind
@@ -70,7 +101,7 @@ brew install kind
 
 **Note: This software was tested and validated working with kind v0.17. [There are known issues with kind v0.20 and Rancher](https://github.com/kubernetes-sigs/kind/issues/3277). If you are experiencing issues, please downgrade
 your kind installation [by installing from the source/release binaries](https://kind.sigs.k8s.io/docs/user/quick-start/#installing-from-release-binaries).** 
-## Installation
+##### `pip` Installation
 
 Airlift can be installed using pip:
 
