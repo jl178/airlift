@@ -97,6 +97,8 @@ kubectl describe pod <POD_NAME> -n airlift
 
 In a future release, this will be abstracted away using the `airlift` CLI. If you are unable to figure out the root cause of your issue, open an Issue on the Github repo.
 
+**Note: If your service is failing to start with a "start up probe failed" error, it is recommended to downgrade your `helm_chart_version` <= 1.9.0. You can set this in `$HOME/.config/airlift/config.yaml`. Start up probes were introduced in chart version `1.11.0`, which have issues on lower Airflow versions.**
+
 [Back to top](#frequently-asked-questions)
 
 ## Q7: My tasks keep failing with SIGTERM. When I check the scheduler, I see it keeps restarting. Why?
