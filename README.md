@@ -51,17 +51,17 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 #### Install `airlift`
 
 ```
-nix-shell -I nixpkgs=channel:nixpkgs-unstable -p airlift
+nix-shell -p airlift
 ```
 
 This will install `airlift` in a disposable shell. Once you `exit` the shell, it will no longer be available for use.
 
-**Note: `airlift` is only available on the unstable nix channel. It will be available on the stable branch of nixpkgs in the future.**
+**Note: `airlift` is only available on the `23.11` or `unstable` nix channel.**
 
 You can also run a single `airlift` command using this shell:
 
 ```
-nix-shell -I nixpkgs=channel:nixpkgs-unstable -p airlift --command "airlift -h"
+nix-shell -p airlift --command "airlift -h"
 ```
 
 To install `airlift` permanently in your environment, you can use `nix-env` [instead](https://nixos.org/manual/nix/stable/command-ref/nix-env).
