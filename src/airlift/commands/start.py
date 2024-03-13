@@ -23,8 +23,6 @@ from airlift.commands.status import status
 import os
 
 
-
-
 def check_plugin_path(path: str):
     """
     Checks the Airflow plugins path for a venv folder, since it could cause scheduler issues.
@@ -110,7 +108,7 @@ def generate_configs(args: DotMap):
             exit(1)
 
 
-def create_cluster():
+def create_cluster(args):
     """
     Creates the Kind cluster for Airlift
 
@@ -125,6 +123,9 @@ def create_cluster():
                 spinner.info("Cluster Already Exists")
                 logging.debug(f"Cluster already exists: {NAME}. Not creating.")
                 return
+            if args.dns_servers is not None:
+                logging.info("Adding DNS servers to cluster")
+                KindUtils.add_dns_servers(args.dns_servers)
         except RuntimeError as e:
             spinner.fail()
             logging.error(str(e))
@@ -210,7 +211,7 @@ def start(args: DotMap):
         check_plugin_path(args.plugin_path)
     generate_configs(args)
     build_image(args)
-    create_cluster()
+    create_cluster(args)
     load_image_to_cluster()
     install_chart(args)
     status(args, 20)

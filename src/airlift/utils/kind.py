@@ -65,3 +65,36 @@ class KindUtils:
         status, stdoutdata, stderrdata = CommandUtils.run_command(command)
         if status != 0:
             raise RuntimeError(f"Failed to load image:\n{stdoutdata}\n\n{stderrdata}")
+
+    @staticmethod
+    def add_dns_servers(dns_servers: list) -> None:
+        """
+        Adds DNS servers to the cluster
+        Args:
+            dns_servers: A list of DNS servers to add to the cluster
+        """
+        for dns_server in dns_servers:
+            command = "docker ps -a --filter name=airlift --format {{.ID}}"
+            status, stdoutdata, stderrdata = CommandUtils.run_command(command)
+            if status != 0:
+                raise RuntimeError(
+                    f"Failed to get docker container for Airlift:\n{stdoutdata}\n\n{stderrdata}"
+                )
+
+            docker_container_id = stdoutdata.strip("\n")
+            command = [
+                "docker",
+                "exec",
+                f"{docker_container_id}",
+                "bash",
+                "-c",
+                f'echo "nameserver {dns_server}" >> /etc/resolv.conf',
+            ]
+
+            status, stdoutdata, stderrdata = CommandUtils.run_command(
+                command, split_command=False
+            )
+            if status != 0:
+                raise RuntimeError(
+                    f"Failed to add DNS server to container:\n{stdoutdata}\n\n{stderrdata}"
+                )

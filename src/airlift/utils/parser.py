@@ -140,6 +140,13 @@ class ParserUtils:
             help="How many times to retry the service connection before failing. Defaults to 2.",
             default=2,
         )
+        start.add_argument(
+            "-dns",
+            "--dns_servers",
+            action="append",
+            default=[],
+            help="Optional list of DNS servers to inject into the `airlift` kind cluster. Useful for when you need to provide other DNS servers for resolving domains.",
+        )
 
     def __add_check_parser(self) -> None:
         self.subparser.add_parser(
