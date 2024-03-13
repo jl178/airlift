@@ -1,11 +1,16 @@
 import subprocess
 import logging
 import sys
+import typing
 
 
 class CommandUtils:
     @staticmethod
-    def run_command(command: str, stream_output: bool = False) -> tuple[int, str, str]:
+    def run_command(
+        command: typing.Union[list[str], str],
+        stream_output: bool = False,
+        split_command: bool = True,
+    ) -> tuple[int, str, str]:
         """
         Runs a CLI command.
         Args:
@@ -15,11 +20,18 @@ class CommandUtils:
 
         """
         if stream_output:
-            CommandUtils._stream_command(command)
+            if isinstance(command, str):
+                CommandUtils._stream_command(command)
+            else:
+                raise ValueError(
+                    "Cannot stream output for a list of commands. Pass a string"
+                )
             return (0, "Logs streamed successfully", "")
         else:
             process = subprocess.Popen(
-                command.split(" "),
+                command.split(" ")
+                if split_command and isinstance(command, str)
+                else command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
             )
