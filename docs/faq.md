@@ -138,3 +138,28 @@ airlift logs --component webserver --follow
 See `airlift logs -h` for all options
 
 [Back to top](#frequently-asked-questions)
+
+## Q10: My pods are unable to pull down the Postgres image. Why?
+
+<a id='q10'></a>
+Answer: There is a possibility this is related to DNS. To check, run:
+
+```bash
+docker exec -it <airlift_container_name> /bin/bash
+ping google.com # If this hangs, it is most likey a DNS issue.
+```
+
+Note: You can find the `airlift_container_name` by running `docker ps`. 
+
+If you cannot `ping google.com` in the container, it is likely a DNS issue. To resolve this, you can pass the `dns_servers` flag in your `airlift start` command. We recommend adding `8.8.8.8` to your list of DNS servers.
+
+You can also add this option to your airlift `config.yaml` file:
+
+```
+... existing configurations
+dns_servers:
+  - 8.8.8.8
+  - 8.8.4.4
+```
+
+[Back to top](#frequently-asked-questions)
