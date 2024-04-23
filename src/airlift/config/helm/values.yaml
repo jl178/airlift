@@ -81,3 +81,15 @@ webserver:
       - name: airflow-ui
         nodePort: 30080
         port: 8080
+  extraVolumes:
+    {% if plugin_path != None  %}
+    - name: plugins
+      hostPath:
+        path: /mnt/airflow/plugins
+        type: Directory
+    {% endif %}
+  extraVolumeMounts:
+    {% if plugin_path != None  %}
+    - name: plugins
+      mountPath: /opt/airflow/plugins
+    {% endif %} 
