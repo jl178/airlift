@@ -13,12 +13,28 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
           build-essential libleveldb-dev libopenmpi-dev openssh-server openssh-client libsasl2-dev
 USER airflow
+# DBT Shared repo Authentication 
+ARG GIT_USER
+ARG GIT_PW
+USER root
+ENV DBT_VENV_PATH="/usr/dbt_venv"
+ENV PIP_USER=false
+RUN apt-get update \
+    && apt-get install -y  python3-venv && apt-get install -y git
+RUN python3 -m venv "${DBT_VENV_PATH}"
+RUN ${DBT_VENV_PATH}/bin/pip install dbt-snowflake
+ENV PIP_USER=true
+RUN source ${DBT_VENV_PATH}/bin/activate && \
+    git config --global credential.helper store && \
+    ( [ -n "${GIT_USER:-}" ] && [ -n "${GIT_PW:-}" ] && \
+      echo "https://${GIT_USER:-}:${GIT_PW:-}@git.zoominfo.com" >> ~/.git-credentials || \
+      echo "No GIT credentials provided" )
 ```
 
 Next, build the docker image:
 
 ```bash
-docker build ./ -t airflow-arm:2.5.1
+docker build ./ --build-arg GIT_USER=giridhar-vemula --build-arg GIT_PW=ghp_XXXXXXXXXX -t airflow-arm:2.5.1
 ```
 
 Finally, start the `airlift` service with the new image:
