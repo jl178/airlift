@@ -11,18 +11,23 @@ FROM apache/airflow:2.5.1-python3.10
 USER root
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-          build-essential libleveldb-dev libopenmpi-dev openssh-server openssh-client libsasl2-dev
-USER airflow
-# DBT Shared repo Authentication 
+          build-essential libleveldb-dev libopenmpi-dev openssh-server openssh-client libsasl2-dev git gettext-base
+# DBT Shared repo Authentication
 ARG GIT_USER
 ARG GIT_PW
-ENV DBT_VENV_PATH="/usr/dbt_venv"
+ENV DBT_VENV_PATH="/usr/local/airflow/dbt_venv"
+ENV DBT_TARGET_ENV="dev"
+
+#ENV variables for profiles.yml
+#Update/Replace These varaibales according to the dbt project
+ENV DBT_USER="DEV_USER"
+ENV DBT_PASSWORD="xxxxx"
+
 ENV PIP_USER=false
-RUN apt-get update \
-    && apt-get install -y  python3-venv && apt-get install -y git
 RUN python3 -m venv "${DBT_VENV_PATH}"
-RUN ${DBT_VENV_PATH}/bin/pip install dbt-snowflake
+RUN ${DBT_VENV_PATH}/bin/pip install dbt-snowflake==1.6.4
 ENV PIP_USER=true
+USER airflow
 RUN source ${DBT_VENV_PATH}/bin/activate && \
     git config --global credential.helper store && \
     ( [ -n "${GIT_USER:-}" ] && [ -n "${GIT_PW:-}" ] && \
