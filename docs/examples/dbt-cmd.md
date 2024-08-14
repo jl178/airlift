@@ -16,13 +16,6 @@ RUN apt-get update \
 ARG GIT_USER
 ARG GIT_PW
 ENV DBT_VENV_PATH="/usr/local/airflow/dbt_venv"
-ENV DBT_TARGET_ENV="dev"
-
-#ENV variables for profiles.yml
-#Update/Replace These varaibales according to the dbt project
-ENV DBT_USER="DEV_USER"
-ENV DBT_PASSWORD="xxxxx"
-
 ENV PIP_USER=false
 RUN python3 -m venv "${DBT_VENV_PATH}"
 RUN ${DBT_VENV_PATH}/bin/pip install dbt-snowflake==1.6.4
@@ -44,6 +37,7 @@ Get the credentials as below.
 
 #### GIT_PW ### 
 Github PAT (Personal Access Token) , [Generate PAT from Github](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic:~:text=your%20organization.%22-,Creating%20a%20personal%20access%20token%20(classic),-Note%3A%20Organization%20owners/).
+Select repo and read:org scopes while creating the Personal Access Token.
 
 
 
