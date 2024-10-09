@@ -40,11 +40,4 @@ Github PAT (Personal Access Token) , [Generate PAT from Github](https://docs.git
 Select repo and read:org scopes while creating the Personal Access Token.
 
 
-
-Finally, start the `airlift` service with the new image:
-
-```bash
-airlift start -d /my/dag/path --image airflow-arm:2.5.1
-```
-
 Now, the base image for Airflow will be 2.5.1 and should run smoothly on an ARM machine (Like the M1/M2 Mac)
